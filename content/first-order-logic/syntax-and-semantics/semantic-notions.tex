@@ -28,16 +28,17 @@ A sentence $!A$ is \emph{valid}, $\Entails !A$, iff $\Sat{M}{!A}$ for every
 \end{defn}
 
 \begin{defn}[Entailment]
-A set of sentences~$\Gamma$ \emph{entails} a sentence~$!A$, $\Gamma
-\Entails !A$, iff for every !!{structure}~$\Struct M$ with
-$\Sat{M}{\Gamma}$, $\Sat{M}{!A}$.
+A set of sentences~$\Gamma$ \emph{entails} a sentence~$!A$, $\Gamma \Entails 
+!A$, iff $\Sat {M}{\Gamma}[s]$ implies $\Sat{M}{!A}[s]$ for every !!{structure}
+~$\Struct M$ and variable assignment $s$.
 \end{defn}
 
 
 \begin{defn}[Satisfiability]
-A set of sentences~$\Gamma$ is \emph{satisfiable} if $\Sat{M}{\Gamma}$
-for some !!{structure}~$\Struct M$.  If $\Gamma$ is not satisfiable it is
-called \emph{unsatisfiable}.
+A set of sentences~$\Gamma$ is \emph{satisfiable} if $\Sat{M}{\Gamma}[s]$ for 
+some !!{structure}~$\Struct M$ and some variable assignment $s$, i.e. $\Gamma 
+\nvDash \lfalse$.  If $\Gamma$ is not satisfiable it is called \emph{ 
+unsatisfiable}, i.e. $\Gamma \Entails \lfalse$.
 \end{defn}
 
 \begin{prop}
@@ -46,16 +47,15 @@ sentences~$\Gamma$.
 \end{prop}
 
 \begin{proof}
-For the forward direction, let $!A$ be valid, and let $\Gamma$ be a
-set of sentences. Let $\Struct M$ be a !!{structure} so that
-$\Sat{M}{\Gamma}$. Since $!A$ is valid, $\Sat{M}{!A}$, hence $\Gamma
-\Entails !A$.
+For the forward direction, let $!A$ be valid, and let $\Gamma$ be a set of 
+sentences. Let $\Struct M$, $s$ be so that $\Sat{M}{\Gamma}[s]$. Since $!A$ 
+is valid, $\Sat{M}{!A}[s]$, hence $\Gamma \Entails !A$.
 
-For the contrapositive of the reverse direction, let $!A$ be invalid,
-so there is a !!{structure} $\Struct M$ with $\Sat/{M}{!A}$. When $\Gamma
-= \{ \ltrue \}$, since $\ltrue$ is valid, $\Sat{M}{\Gamma}$. Hence,
-there is a !!{structure} $\Struct M$ so that $\Sat{M}{\Gamma}$ but
-$\Sat/{M}{!A}$, hence $\Gamma$ does not entail $!A$.
+For the contrapositive of the reverse direction, let $!A$ be invalid, so 
+there is $\Struct M$, $s$ with $\Sat/{M}{!A}[s]$. When $\Gamma = \{ \ltrue \}$
+  , since $\ltrue$ is valid, $\Sat{M}{\Gamma}[s]$. Hence, there is a $\Struct 
+M $ so that $\Sat{M}{\Gamma}[s]$ but $\Sat/{M}{!A}[s]$ for a variable 
+assignment $s$, hence $\Gamma$ does not entail $!A$.
 \end{proof}
 
 \begin{prop}
@@ -64,19 +64,18 @@ $\Gamma \Entails !A$ iff $\Gamma \cup \{\lnot !A\}$ is unsatisfiable.
 \end{prop}
 
 \begin{proof}
-For the forward direction, suppose $\Gamma \Entails !A$ and suppose to the
-contrary that there is a !!{structure} $\Struct M$ so that $\Sat{M}{\Gamma
-  \cup \{ \lnot !A \}}$. Since $\Sat{M}{\Gamma}$ and $\Gamma \Entails
-!A$, $\Sat{M}{!A}$. Also, since $\Sat{M}{\Gamma\cup \{ \lnot !A \}}$,
-$\Sat{M}{\lnot !A}$, so we have both $\Sat{M}{!A}$ and $\Sat/{M}{!A}$,
-a contradiction. Hence, there can be no such !!{structure} $\Struct M$, so
-$\Gamma \cup \{ !A \}$ is unsatisfiable.
+For the forward direction, suppose $\Gamma \Entails !A$ and suppose to the 
+contrary that there is $\Struct M$, $s$ so that $\Sat{M}{\Gamma   \cup \{ 
+\lnot !A \}}[s]$. Since $\Sat{M}{\Gamma}[s]$ and $\Gamma \Entails !A$, $\Sat{M
+}{!A}[s]$. Also, since $\Sat{M}{\Gamma\cup \{ \lnot !A \}}[s]$, $\Sat{M}{\lnot
+ !A}[s]$, so we have both $\Sat{M}{!A}[s]$ and $\Sat/{M}{!A}[s]$, a 
+contradiction. Hence, there can be no such !!{structure} $\Struct M$, so $
+\Gamma \cup \{ !A \}$ is unsatisfiable.
 
-For the reverse direction, suppose $\Gamma \cup \{ \lnot !A \}$ is
-unsatisfiable. So for every !!{structure} $\Struct M$, either
-$\Sat/{M}{\Gamma}$ or $\Sat{M}{!A}$. Hence, for every !!{structure}
-$\Struct M$ with $\Sat{M}{\Gamma}$, $\Sat{M}{!A}$, so $\Gamma \Entails
-!A$.
+For the reverse direction, suppose $\Gamma \cup \{ \lnot !A \}$ is 
+unsatisfiable. So for every $\Struct M$, $s$, either $\Sat/{M}{\Gamma}[s]$ or 
+$\Sat/{M}{\lnot !A}[s]$. Hence, for every $\Struct M$, $s$ with $\Sat{M}{
+\Gamma}[s]$, $\Sat{M}{!A}[s]$, so $\Gamma \Entails !A$.
 \end{proof}
 
 \begin{prob}
@@ -96,10 +95,10 @@ If $\Gamma \subseteq \Gamma'$ and $\Gamma \Entails !A$, then $\Gamma'
 \end{prop}
 
 \begin{proof}
-Suppose that $\Gamma \subseteq \Gamma'$ and $\Gamma \Entails !A$. Let
-$\Struct M$ be such that $\Sat{M}{\Gamma'}$; then $\Sat{M}{\Gamma}$,
-and since $\Gamma \Entails !A$, we get that $\Sat{M}{!A}$. Hence,
-whenever $\Sat{M}{\Gamma'}$, $\Sat{M}{!A}$, so $\Gamma' \Entails !A$.
+Suppose that $\Gamma \subseteq \Gamma'$ and $\Gamma \Entails !A$. Let $\Struct
+  M$, $s$ be such that $\Sat{M}{\Gamma'}[s]$; then $\Sat{M}{\Gamma}[s]$, and 
+since $\Gamma \Entails !A$, we get that $\Sat{M}{!A}[s]$. Hence, whenever $
+\Sat{M}{\Gamma'}[s]$, $\Sat{M}{!A}[s]$, so $\Gamma' \Entails !A$.
 \end{proof}
 
 
@@ -108,17 +107,17 @@ $\Gamma \cup \{!A\} \Entails !B$ iff $\Gamma \Entails !A \lif !B$.
 \end{thm}
 
 \begin{proof}
-For the forward direction, let $\Gamma \cup \{ !A \} \Entails !B$ and
-let $\Struct M$ be a !!{structure} so that $\Sat{M}{\Gamma}$. If
-$\Sat{M}{!A}$, then $\Sat{M}{\Gamma \cup \{ !A \} }$, so since $\Gamma
-\cup \{ !A \}$ entails $!B$, we get $\Sat{M}{!B}$. Therefore,
-$\Sat{M}{!A \lif !B}$, so $\Gamma \Entails !A \lif !B$.
+For the forward direction, let $\Gamma \cup \{ !A \} \Entails !B$ and let $
+\Struct M$, $s$ be so that $\Sat{M}{\Gamma}[s]$. If $\Sat{M}{!A}[s]$, then $
+\Sat{M}{\Gamma \cup \{ !A \}}[s]$, so since $\Gamma \cup \{ !A \}$ entails $!B
+$, we get $\Sat{M}{!B}[s]$. Therefore, $\Sat{M}{!A \lif !B}[s]$, so $\Gamma 
+\Entails !A \lif !B$.
 
-For the reverse direction, let $\Gamma \Entails !A \lif !B$ and
-$\Struct M$ be a !!{structure} so that $\Sat{M}{\Gamma \cup \{ !A
-  \}}$. Then $\Sat{M}{\Gamma}$, so $\Sat{M}{!A \lif !B}$, and since
-$\Sat{M}{!A}$, $\Sat{M}{!B}$. Hence, whenever $\Sat{M}{\Gamma \cup \{
-  !A \} }$, $\Sat{M}{!B}$, so $\Gamma \cup \{ !A \} \Entails !B$.
+For the reverse direction, let $\Gamma \Entails !A \lif !B$ and $\Struct M$, $
+s$ be so that $\Sat{M}{\Gamma \cup \{ !A   \}}[s]$. Then $\Sat{M}{\Gamma}[s]$
+, so $\Sat{M}{!A \lif !B}[s]$, and since $\Sat{M}{!A}[s]$, $\Sat{M}{!B}[s]$. 
+Hence, whenever $\Sat{M}{\Gamma \cup \{   !A \} }[s]$, $\Sat{M}{!B}[s]$, so $
+\Gamma \cup \{ !A \} \Entails !B$.
 \end{proof}
 
 

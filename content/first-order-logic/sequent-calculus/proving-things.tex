@@ -23,8 +23,8 @@ sequent of this form. This could be a structural rule, but it is a
 good idea to start by looking for a logical rule. The only logical
 connective occurring in a !!{formula} in the lower sequent is $\land$,
 so we're looking for an $\land$ rule, and since the $\land$ symbol
-occurs in the antecedent !!{formula}s, we're looking at the $\land$
-left rule.
+occurs in the antecedent !!{formula}s, we're looking at the \LeftR{\land}
+rule.
 \begin{prooftree}
 \AxiomC{}
 \RightLabel{\LeftR{\land}} \UnaryInf$!A\land !B \fCenter !A$
@@ -58,8 +58,8 @@ they are !!{main operator}s of !!{sentence}s in the end-sequent,
 while $\lnot$ is inside the scope of another connective, so we will
 take care of it later. Our options for logical rules for the final
 inference are therefore the \LeftR{\lor} rule and the \RightR{\lif}
-rule. We could pick either rule, really, but let's pick the $\lif$
-right rule (if for no reason other than it allows us to put off
+rule. We could pick either rule, really, but let's pick the \RightR{\lif}
+rule (if for no reason other than it allows us to put off
 splitting into two branches). According to the form of \RightR{\lif}
 inferences which can yield the lower sequent, this must look like:
 \begin{prooftree}
@@ -142,8 +142,8 @@ branches for a moment:
 \UnaryInf$\lnot !A \lor \lnot !B \fCenter \lnot (!A \land !B)$
 \end{prooftree}
 Now we have a choice of whether to look at the \LeftR{\land} or the
-\LeftR{\lor} rule. Let's see what happens when we apply the $\land$
-left rule: we have a choice to start with either the sequent $!A,
+\LeftR{\lor} rule. Let's see what happens when we apply the \LeftR{\land}
+rule: we have a choice to start with either the sequent $!A,
 \lnot !A \lor !B \Sequent \hspace{1em}$ or the sequent $!B, \lnot !A
 \lor !B \Sequent \hspace{1em}$. Since the proof is symmetric with
 regards to $!A$ and $!B$, let's go with the former:
@@ -207,70 +207,58 @@ rules in these steps and still obtained a correct derivation).
 \end{ex}
 
 \begin{ex}
-Give an $\Log{LK}$-derivation of the sequent $\lexists[x][\lnot !A(x)]
-\Sequent \lnot \lforall[x][!A(x)]$.
+Give an $\Log{LK}$-derivation of the sequent $\lexists[x][\lnot !A]
+\Sequent \lnot \lforall[x][!A]$.
 
 When dealing with quantifiers, we have to make sure not to violate the
-eigenvariable condition, and sometimes this requires us to play around
+eigenvariable condition and sometimes this requires us to play around
 with the order of carrying out certain inferences. In general, it
 helps to try and take care of rules subject to the eigenvariable
-condition first (they will be lower down in the finished proof). Also,
-it is a good idea to try and look ahead and try to guess what the
-initial sequent might look like. In our case, it will have to be
-something like $!A(a) \Sequent !A(a)$. That means that when we are
-``reversing'' the quantifier rules, we will have to pick the same
-term---what we will call $a$---for both the $\lforall$ and the
-$\lexists$ rule. If we picked different terms for each rule, we would
-end up with something like $!A(a) \Sequent !A(b)$, which, of course,
-is not derivable.
+condition first (they will be lower down in the finished proof).
 
 Starting as usual, we write
 \begin{prooftree}
 \AxiomC{}
-\UnaryInf$\lexists[x][\lnot !A(x)] \fCenter \lnot \lforall[x][!A(x)]$
+\UnaryInf$\lexists[x][\lnot !A] \fCenter \lnot \lforall[x][!A]$
 \end{prooftree}
 We could either carry out the \LeftR{\exists} rule or the \RightR{\lnot}
 rule. Since the \LeftR{\exists} rule is subject to the eigenvariable
 condition, it's a good idea to take care of it sooner rather than
-later, so we'll do that one first.
+later, so we'll do that one first. Indeed, $x$ satifies the eigenvariable
+condition because all $x$ on the right side are bound by the $\lforall$
+quantifier.
 \begin{prooftree}
 \AxiomC{}
-\UnaryInf$ \lnot !A(a) \fCenter \lnot \lforall[x][!A(x)]$
+\UnaryInf$ \Subst{\lnot !A}{x}{x} \fCenter \lnot \lforall[x][!A]$
 \RightLabel{\LeftR{\lexists}}
-\UnaryInf$ \lexists[x][\lnot !A(x)] \fCenter \lnot \lforall[x][!A(x)]$
+\UnaryInf$ \lexists[x][\lnot !A] \fCenter \lnot \lforall[x][!A]$
 \end{prooftree}
-Applying the \LeftR{\lnot} and right rules to eliminate the $\lnot$ signs, we get
+Applying the \LeftR{\lnot} and \RightR{\lnot} rules and then eliminating
+the double $\lnot$ signs on both sides---the reader may do this as an 
+exercise---we get
 \begin{prooftree}
 \AxiomC{}
-\UnaryInf$\lforall[x][!A(x)] \fCenter !A(a)$
-\RightLabel{\RightR{\lnot}}
-\UnaryInf$ \fCenter \lnot \lforall[x][!A(x)], !A(a)$
-\RightLabel{\LeftR{\lnot}}
-\UnaryInf$ \lnot !A(a) \fCenter \lnot \lforall[x] !A(x)$
+\UnaryInf$\lforall[x][!A] \fCenter !A$
+\Deduce$ \lnot !A \fCenter \lnot \lforall[x] !A$
 \RightLabel{\LeftR{\lexists}}
-\UnaryInf$ \lexists[x] \lnot !A(x) \fCenter \lnot \lforall[x] !A(x)$
+\UnaryInf$ \lexists[x] \lnot !A \fCenter \lnot \lforall[x] !A$
 \end{prooftree}
 At this point, our only option is to carry out the \LeftR{\forall}
 rule. Since this rule is not subject to the eigenvariable restriction,
-we're in the clear. Remember, we want to try and obtain an initial
-sequent (of the form $!A(a) \Sequent !A(a)$), so we should choose $a$
-as our argument for $!A$ when we apply the rule.
+we're in the clear.
 \begin{prooftree}
-\Axiom$!A(a) \fCenter !A(a)$
+\Axiom$!A \fCenter !A$
 \RightLabel{\LeftR{\lforall}}
-\UnaryInf$\lforall[x][!A(x)] \fCenter !A(a)$
-\RightLabel{\RightR{\lnot}}
-\UnaryInf$ \fCenter \lnot \lforall[x][!A(x)], !A(a)$
-\RightLabel{\LeftR{\lnot}}
-\UnaryInf$ \lnot !A(a) \fCenter \lnot \lforall[x][!A(x)]$
+\UnaryInf$\lforall[x][!A] \fCenter !A$
+\Deduce$ \lnot !A \fCenter \lnot \lforall[x][!A]$
 \RightLabel{\LeftR{\lexists}}
-\UnaryInf$ \lexists[x][ \lnot !A(x)] \fCenter \lnot \lforall[x][!A(x)]$
+\UnaryInf$ \lexists[x][ \lnot !A] \fCenter \lnot \lforall[x][!A]$
 \end{prooftree}
 It is important, especially when dealing with quantifiers, to double
 check at this point that the eigenvariable condition has not been
 violated. Since the only rule we applied that is subject to the
-eigenvariable condition was \LeftR{\exists}, and the eigenvariable~$a$
-does not occur in its lower sequent (the end-sequent), this is a
+eigenvariable condition was \LeftR{\exists}, and the variable~$x$
+does not occur free in its lower sequent (the end-sequent), this is a
 correct derivation.
 \end{ex}
 
